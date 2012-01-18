@@ -9,14 +9,28 @@
     android:layout_height="wrap_content"
     android:text="Hello World, aaFile_Transfer"
     />
-<Button android:id="@+id/button_server"
+<Button android:id="@+id/button_TCP_server"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Start Server to Wait for Transmit" />
+    android:text="Start TCP Server to Wait for File Transmit" />
 
-<Button android:id="@+id/button_client"
+<Button android:id="@+id/button_TCP_client"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Start Client Receive" />
+    android:text="Start TCP Client to Receive File" />
+
+<View android:background="#87CEEB" 
+    android:layout_width = "fill_parent" 
+    android:layout_height="2dip" />
+
+<Button android:id="@+id/button_UDP_server"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Start UDP Server" />
+
+<Button android:id="@+id/button_UDP_client"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Start UDP Client" />
 </LinearLayout>
 

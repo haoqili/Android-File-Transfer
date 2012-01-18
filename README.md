@@ -1,4 +1,7 @@
-The Simplest Android File Transfer
+* TCP - start the server first, ServerSocket.accept() blocks
+* UDP - start the client first, DatagramSocket.receive() blocks 
+
+The Simplest Android TCP File Transfer
 ==================================
 
 The meat of the server/client code comes from [Real's How To site][ref_site].
@@ -52,3 +55,21 @@ What I need to do
 
 [ref_site]: http://www.rgagnon.com/javadetails/java-0542.html
 [my_barnacle]: https://github.com/haoqili/barnacle
+
+UDP
+======
+Just a simple UDP transmission with the meat of the code coming from [helloandroid][h_a].
+
+You Need To Do:
+----------
+
+1. Let the 2 phones connect to the same network.
+
+    I turned on my ad-hoc [barnacle][my_barnacle] with the same name on both phones
+
+2. Fill out the `TODO: fill in UDP Client IP`
+3. Click on the "Start UDP Client" button
+4. Click on "Start UDP Server" button
+5. Observe in logcat: `D/Udp tutorial( 1167): message:Hello Android!`
+
+[h_a]: http://www.helloandroid.com/tutorials/simple-udp-communication-example

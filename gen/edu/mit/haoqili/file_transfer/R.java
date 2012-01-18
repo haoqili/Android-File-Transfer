@@ -11,8 +11,10 @@ public final class R {
     public static final class attr {
     }
     public static final class id {
-        public static final int button_client=0x7f040001;
-        public static final int button_server=0x7f040000;
+        public static final int button_TCP_client=0x7f040001;
+        public static final int button_TCP_server=0x7f040000;
+        public static final int button_UDP_client=0x7f040003;
+        public static final int button_UDP_server=0x7f040002;
     }
     public static final class layout {
         public static final int main=0x7f020000;

@@ -8,8 +8,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import android.app.Activity;
@@ -22,6 +26,8 @@ public class aaFile_Transfer extends Activity
 {
 	private Button serverTransmitButton;
 	private Button clientReceiveButton;
+	private Button serverUDPButton;
+	private Button clientUDPButton;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -29,21 +35,21 @@ public class aaFile_Transfer extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-
-		serverTransmitButton = (Button) findViewById(R.id.button_server);
+		// TCP
+		// from: http://www.rgagnon.com/javadetails/java-0542.html
+		serverTransmitButton = (Button) findViewById(R.id.button_TCP_server);
 		serverTransmitButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Log.i("Start Server Button Clicked", "yipee");
 
 				try {
-					// from: http://www.rgagnon.com/javadetails/java-0542.html
 					// create socket
 					// TODO: the port should match the one in Client
 					ServerSocket servsock = new ServerSocket(5005);
 					while (true) {
 						Log.i("************", "Waiting...");
 
-						Socket sock = servsock.accept();
+						Socket sock = servsock.accept(); // blocks until connection opened
 						Log.i("************", "Accepted connection : " + sock);
 
 						// sendfile
@@ -69,7 +75,7 @@ public class aaFile_Transfer extends Activity
 			}	
 		});
 
-		clientReceiveButton = (Button) findViewById(R.id.button_client);
+		clientReceiveButton = (Button) findViewById(R.id.button_TCP_client);
 		clientReceiveButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Log.i("Read Button Clicked", "yipee");
@@ -83,7 +89,7 @@ public class aaFile_Transfer extends Activity
 					// localhost for testing
 					// TODO: server's IP address. Socket should match one above in server
 					Socket sock = new Socket("192.168.5.20",5005);
-				
+
 					Log.i("************", "Connecting...");
 
 					// receive file
@@ -124,6 +130,64 @@ public class aaFile_Transfer extends Activity
 				}
 
 				Log.i("=============== the end of read ===============", "==");
+
+			}
+		});
+
+		// UDP
+		// from: http://www.helloandroid.com/tutorials/simple-udp-communication-example
+		serverUDPButton = (Button) findViewById(R.id.button_UDP_server);
+		serverUDPButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				try {
+					String messageStr="Hello Android!";
+					int server_port = 6668;
+					// TODO: fill in UDP Client IP
+					InetAddress local = InetAddress.getByName("192.168.5.20");
+					DatagramPacket p = new DatagramPacket(messageStr.getBytes(), 
+							messageStr.length(),
+							local,server_port);
+					Log.i("***** UDP server about to: ", "send");
+					DatagramSocket s = new DatagramSocket();
+					s.send(p);
+					s.close();
+					Log.i("***** UDP server: ", "Done sending");
+				} catch ( SocketException e) {
+					Log.i("***** UDP server has: ", "Socket Exception");
+				} catch ( UnknownHostException e ) {
+					Log.i("***** UDP server has: ", "UnknownHostException");
+				} catch (IOException e){
+					Log.i("***** UDP server has IOException", "e: " + e);
+				}
+			}
+		});
+
+		clientUDPButton = (Button) findViewById(R.id.button_UDP_client);
+		clientUDPButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				try {
+					Log.i("***** UDP client: ", "starting");
+					String text;
+					int server_port = 6668;
+					byte[] message = new byte[2048];
+					DatagramPacket p = new DatagramPacket(message, message.length);
+					DatagramSocket s = new DatagramSocket(server_port);
+					Log.i("***** UDP client: ", "about to wait to receive");
+					s.receive(p); // blocks until something is received
+					Log.i("***** UDP client: ", "received");
+					text = new String(message, 0, p.getLength());
+					Log.i("***** :D UDP client message: ", text);
+					Log.d("Udp tutorial","message:" + text);
+					s.close();
+				} catch ( SocketException e) {
+					Log.i("***** UDP client has: ", "Socket Exception");
+				} catch (IOException e){
+					Log.i("***** UDP client has IOException", "e: " + e);
+				}
 
 			}
 		});
