@@ -1,7 +1,7 @@
 * TCP - start the server first, ServerSocket.accept() blocks
 * UDP - start the client first, DatagramSocket.receive() blocks 
 
-The Simplest Android TCP File Transfer
+The Simplest Android UDP or TCP File Transfer
 ==================================
 
 The meat of the server/client code comes from [Real's How To site][ref_site].
