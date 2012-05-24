@@ -1,9 +1,10 @@
+The Simplest Android UDP or TCP File Transfer
+==================================
 * TCP - start the server first, ServerSocket.accept() blocks
 * UDP - start the client first, DatagramSocket.receive() blocks 
 
-The Simplest Android UDP or TCP File Transfer
-==================================
-
+If you want UDP
+=================
 The meat of the server/client code comes from [Real's How To site][ref_site].
 
 You Need To Do:
@@ -56,8 +57,8 @@ What I need to do
 [ref_site]: http://www.rgagnon.com/javadetails/java-0542.html
 [my_barnacle]: https://github.com/haoqili/barnacle
 
-UDP
-======
+If you want UDP
+=================
 Just a simple UDP transmission with the meat of the code coming from [helloandroid][h_a].
 
 You Need To Do:
